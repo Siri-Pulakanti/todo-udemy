@@ -3,6 +3,7 @@ import Fab from "@mui/material/Fab";
 import { useState } from "react";
 
 function CreateArea(props) {
+  const [isExpanded, setExpanded] = useState(false);
   const [note, setNote] = useState({
     title: "",
     content: "",
@@ -25,20 +26,27 @@ function CreateArea(props) {
     });
     event.preventDefault();
   }
+  function expand() {
+    setExpanded(true);
+  }
 
   return (
     <div>
       <form className="create-note">
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          onChange={handleChange}
-          value={note.title}
-        />
+        {isExpanded && (
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            onChange={handleChange}
+            value={note.title}
+          />
+        )}
+
         <textarea
           name="content"
-          rows="3"
+          rows={isExpanded ? 3 : 1}
+          onClick={expand}
           placeholder="Take a note..."
           onChange={handleChange}
           value={note.content}
